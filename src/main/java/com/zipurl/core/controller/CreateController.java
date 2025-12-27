@@ -7,14 +7,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
-
 @RestController
-@RequestMapping("/zipurl/api")
-public class Controller {
+public class CreateController implements ControllerHandler {
 
     @PostMapping("/create")
     public ResponseEntity<ShortUrlResponse> createUrl(@RequestBody(required = false) @Validated ShortUrlRequest req) {
