@@ -7,16 +7,39 @@ spring:
     url: jdbc:mysql://localhost:3306/test
     username: root
     password: admin
-    driver-class-name=com: com.mysql.cj.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
-
-  # Jpa
+  # JPA
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
 
-  #Redis
-  redis:
-    host: localhost
-    port: 6379
+  # Redis
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      timeout: 2s
+      lettuce:
+        pool:
+          max-active: 16
+          max-idle: 8
+          min-idle: 2
+          max-wait: 2s
+
+# Resilience 4j configuration
+resilience4j:
+  circuitbreaker:
+    instances:
+      redisError:
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 20
+        minimumNumberOfCalls: 10
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s
+        recordExceptions:
+          - org.springframework.data.redis.RedisConnectionFailureException

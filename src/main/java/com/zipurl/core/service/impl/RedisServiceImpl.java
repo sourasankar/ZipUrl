@@ -14,13 +14,26 @@ import java.time.Duration;
 @Service
 public class RedisServiceImpl implements RedisService {
 
-    private final RedisTemplate<String, Object> redisTemplate;
-    private final ShortUrlRepo shortUrlRepo;
+    private final RedisTemplate<String, String> redisTemplate;
     private final DatabaseService databaseService;
 
-    @CircuitBreaker(name = "redisError", fallbackMethod = "redisSaveFailure")
+    @CircuitBreaker(name = "redisError", fallbackMethod = "redisFallBackToDB")
     @Override
-    public Boolean saveUrlWithExpiry(String key, String value) {
+    public String getCachedUrl(String key) {
+        Object url = redisTemplate.opsForValue().get(key);
+        if (url != null) {
+            return url.toString();
+        }
+        return getFromDBAndCacheToRedis(key);
+    }
+
+    private String redisFallBackToDB(String key, Throwable e) {
+        System.out.println("Exception : " + e);
+        return getFromDBAndCacheToRedis(key);
+    }
+
+    @CircuitBreaker(name = "redisError", fallbackMethod = "redisSaveFailure")
+    private Boolean saveUrlWithExpiry(String key, String value) {
         redisTemplate.opsForValue().set(key, value, Duration.ofMinutes(10));
         return true;
     }
@@ -30,18 +43,13 @@ public class RedisServiceImpl implements RedisService {
         return false;
     }
 
-    @CircuitBreaker(name = "redisError", fallbackMethod = "redisFallBackToDB")
-    @Override
-    public String getCachedUrl(String key) {
-        Object url = redisTemplate.opsForValue().get(key);
+    private String getFromDBAndCacheToRedis(String key) {
+        String url = databaseService.getFromDB(key);
         if (url != null) {
-            return url.toString();
+            Boolean redisFlag = saveUrlWithExpiry(key, url);
+            System.out.println("Redis save status : " + redisFlag);
+            return url;
         }
-        return databaseService.getFromDBAndCacheToRedis(key);
-    }
-
-    private String redisFallBackToDB(String key, Throwable e) {
-        System.out.println("Exception : " + e);
-        return databaseService.getFromDBAndCacheToRedis(key);
+        return null;
     }
 }

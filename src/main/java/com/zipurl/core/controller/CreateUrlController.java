@@ -1,19 +1,18 @@
 package com.zipurl.core.controller;
 
-import com.zipurl.core.dto.ShortUrlRequest;
+import com.zipurl.core.dto.CreateUrlRequest;
 import com.zipurl.core.dto.ShortUrlResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class CreateController implements ControllerHandler {
+public class CreateUrlController implements ControllerHandler {
 
     @PostMapping("/create")
-    public ResponseEntity<ShortUrlResponse> createUrl(@RequestBody(required = false) @Validated ShortUrlRequest req) {
+    public ResponseEntity<ShortUrlResponse> createUrl(@RequestBody(required = false) CreateUrlRequest req) {
         ShortUrlResponse response = new ShortUrlResponse();
         response.setStatus("Failure");
         try {
