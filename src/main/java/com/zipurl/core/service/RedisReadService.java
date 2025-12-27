@@ -1,6 +1,6 @@
 package com.zipurl.core.service;
 
-public interface RedisService {
+public interface RedisReadService {
 
     String getCachedUrl(String key);
 }

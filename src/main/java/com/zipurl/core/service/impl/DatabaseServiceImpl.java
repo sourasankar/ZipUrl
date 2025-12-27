@@ -14,7 +14,7 @@ public class DatabaseServiceImpl implements DatabaseService {
 
     @Override
     public String getFromDB(String key) {
-
+        System.out.println("Inside getFromDB");
         ShortUrl result = shortUrlRepo.findById(key).orElse(null);
         if (result != null && !result.getUrl().isBlank()) {
             return result.getUrl();

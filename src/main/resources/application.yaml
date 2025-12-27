@@ -37,9 +37,7 @@ resilience4j:
     instances:
       redisError:
         slidingWindowType: COUNT_BASED
-        slidingWindowSize: 20
-        minimumNumberOfCalls: 10
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
         failureRateThreshold: 50
         waitDurationInOpenState: 10s
-        recordExceptions:
-          - org.springframework.data.redis.RedisConnectionFailureException

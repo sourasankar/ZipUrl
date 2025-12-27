@@ -7,5 +7,6 @@ import lombok.Data;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ShortUrlResponse {
     private String status;
+    private String message;
     private String url;
 }
