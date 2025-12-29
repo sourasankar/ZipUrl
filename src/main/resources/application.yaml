@@ -53,3 +53,9 @@ resilience4j:
         minimumNumberOfCalls: 2
         failureRateThreshold: 50
         waitDurationInOpenState: 10s
+  ratelimiter:
+    instances:
+      createShortUrlLimiter:
+        limit-for-period: 5
+        limit-refresh-period: 10s
+        timeout-duration: 0

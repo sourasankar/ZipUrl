@@ -20,18 +20,14 @@ public class GetUrlController implements ControllerHandler {
         ShortUrlResponse response = new ShortUrlResponse();
         response.setStatus(Constants.FAILURE);
 
-        try {
-            String longUrl = redisReadService.getCachedUrl(shortUrlKey);
-            if (longUrl != null) {
-                response.setShortUrl(longUrl);
-                response.setStatus(Constants.SUCCESS);
-            } else {
-                response.setMessage("Corresponding long url not found");
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-            return ResponseEntity.internalServerError().body(response);
+        String longUrl = redisReadService.getCachedUrl(shortUrlKey);
+        if (longUrl != null) {
+            response.setShortUrl(longUrl);
+            response.setStatus(Constants.SUCCESS);
+        } else {
+            response.setMessage("Corresponding long url not found");
         }
+
         return ResponseEntity.ok().body(response);
     }
 }
