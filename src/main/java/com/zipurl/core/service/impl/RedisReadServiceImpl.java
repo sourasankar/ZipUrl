@@ -19,7 +19,7 @@ public class RedisReadServiceImpl implements RedisReadService {
     @CircuitBreaker(name = "redisError", fallbackMethod = "redisFallBackToDB")
     @Override
     public String getCachedUrl(String key) {
-        System.out.println("Inside getCachedUrl");
+        System.out.println("Inside getRedisCachedUrl");
         String url = redisTemplate.opsForValue().get(key);
         if (url != null) {
             return url;
