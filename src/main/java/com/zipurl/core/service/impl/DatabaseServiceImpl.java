@@ -21,4 +21,19 @@ public class DatabaseServiceImpl implements DatabaseService {
         }
         return null;
     }
+
+    @Override
+    public Boolean saveToDB(String shortId, String longUrl) {
+        System.out.println("Inside getFromDB");
+        ShortUrl entity = new ShortUrl();
+        entity.setShortId(shortId);
+        entity.setUrl(longUrl);
+        try {
+            shortUrlRepo.saveAndFlush(entity);
+        } catch (Exception e) {
+            System.out.println("DB save failure : " + e);
+            return false;
+        }
+        return true;
+    }
 }

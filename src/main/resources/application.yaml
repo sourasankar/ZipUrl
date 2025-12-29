@@ -47,3 +47,9 @@ resilience4j:
         minimumNumberOfCalls: 5
         failureRateThreshold: 50
         waitDurationInOpenState: 10s
+      dbError:
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 4
+        minimumNumberOfCalls: 2
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10s

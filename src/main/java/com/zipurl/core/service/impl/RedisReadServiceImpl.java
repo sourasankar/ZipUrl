@@ -28,7 +28,7 @@ public class RedisReadServiceImpl implements RedisReadService {
         return getFromDBAndCacheToRedis(key);
     }
 
-    private String redisFallBackToDB(String key, Throwable e) {
+    public String redisFallBackToDB(String key, Throwable e) {
         System.out.println("Exception : " + e);
         return getFromDBAndCacheToRedis(key);
     }

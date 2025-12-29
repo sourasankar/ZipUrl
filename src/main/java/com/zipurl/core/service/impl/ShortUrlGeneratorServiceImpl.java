@@ -2,10 +2,8 @@ package com.zipurl.core.service.impl;
 
 import com.fasterxml.uuid.Generators;
 import com.zipurl.core.config.ZipUrlConfig;
-import com.zipurl.core.dao.ShortUrlRepo;
-import com.zipurl.core.entity.ShortUrl;
+import com.zipurl.core.service.DatabaseService;
 import com.zipurl.core.service.ShortUrlGeneratorService;
-import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +14,7 @@ import java.util.UUID;
 public class ShortUrlGeneratorServiceImpl implements ShortUrlGeneratorService {
 
     private final ZipUrlConfig zipUrlConfig;
-    private final ShortUrlRepo shortUrlRepo;
-    private final EntityManager entityManager;
+    private final DatabaseService databaseService;
     private static final String BASE62 = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     private String generateShortId() {
@@ -46,15 +43,8 @@ public class ShortUrlGeneratorServiceImpl implements ShortUrlGeneratorService {
     public String generateShortUrl(String longUrl) {
 
         String shortId = generateShortId();
-        ShortUrl entity = new ShortUrl();
-        entity.setShortId(shortId);
-        entity.setUrl(longUrl);
-        try {
-            shortUrlRepo.saveAndFlush(entity);
-        } catch (Exception e) {
-            System.out.println("DB save failure");
-            return null;
-        }
+        Boolean flag = databaseService.saveToDB(shortId, longUrl);
+        if (!flag) return null;
 
         return zipUrlConfig.getUrlPrefix() + shortId;
     }

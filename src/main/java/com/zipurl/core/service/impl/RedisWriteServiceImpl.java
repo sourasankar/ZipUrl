@@ -23,7 +23,7 @@ public class RedisWriteServiceImpl implements RedisWriteService {
         return true;
     }
 
-    private Boolean redisSaveFailure(String key, String value, Throwable e) {
+    public Boolean redisSaveFailure(String key, String value, Throwable e) {
         System.out.println("Exception : key - " + key + " value - " + value + " : " + e);
         return false;
     }
