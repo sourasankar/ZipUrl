@@ -57,5 +57,5 @@ resilience4j:
     instances:
       createShortUrlLimiter:
         limit-for-period: 5
-        limit-refresh-period: 10s
+        limit-refresh-period: 30s
         timeout-duration: 0

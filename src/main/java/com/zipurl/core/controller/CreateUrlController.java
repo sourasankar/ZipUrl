@@ -46,7 +46,8 @@ public class CreateUrlController implements ControllerHandler {
     public ResponseEntity<ShortUrlResponse> createUrlLimited(CreateUrlRequest req, Throwable ex) {
         ShortUrlResponse response = new ShortUrlResponse();
         response.setStatus(Constants.FAILURE);
-        response.setMessage("Too many requests");
+        response.setMessage("Too Many Requests");
+        System.out.println("Too Many Requests");
         return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).body(response);
     }
 }
