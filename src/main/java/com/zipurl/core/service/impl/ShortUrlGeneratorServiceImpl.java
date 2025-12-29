@@ -44,6 +44,7 @@ public class ShortUrlGeneratorServiceImpl implements ShortUrlGeneratorService {
 
     @Override
     public String generateShortUrl(String longUrl) {
+
         String shortId = generateShortId();
         ShortUrl entity = new ShortUrl();
         entity.setShortId(shortId);
