@@ -6,11 +6,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
 
-import java.net.URL;
-
 @Data
 @Entity
-@Table(schema = "ShortUrl")
+@Table(schema = "short_url")
 public class ShortUrl {
 
     @Id

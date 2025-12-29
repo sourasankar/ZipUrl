@@ -1,3 +1,7 @@
+zipurl:
+  short-id-size: 8
+  url-prefix: https://zipurl.short/
+
 spring:
   application:
     name: zipurl

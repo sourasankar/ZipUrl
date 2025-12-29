@@ -23,7 +23,7 @@ public class GetUrlController implements ControllerHandler {
         try {
             String longUrl = redisReadService.getCachedUrl(shortUrlKey);
             if (longUrl != null) {
-                response.setUrl(longUrl);
+                response.setShortUrl(longUrl);
                 response.setStatus(Constants.SUCCESS);
             } else {
                 response.setMessage("Corresponding long url not found");
