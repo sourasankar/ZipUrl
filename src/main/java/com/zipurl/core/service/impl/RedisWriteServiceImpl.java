@@ -19,7 +19,8 @@ public class RedisWriteServiceImpl implements RedisWriteService {
     @CircuitBreaker(name = "redisError", fallbackMethod = "redisSaveFailure")
     @Override
     public Boolean saveUrlWithExpiry(String key, String value) {
-        redisTemplate.opsForValue().set(key, value, Duration.ofMinutes(zipUrlConfig.getRedisTtl()));
+        System.out.println("Inside saveUrlWithExpiry");
+        redisTemplate.opsForValue().set(key, value, Duration.ofSeconds(zipUrlConfig.getRedisTtl()));
         return true;
     }
 

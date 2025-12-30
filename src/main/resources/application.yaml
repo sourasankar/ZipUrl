@@ -1,7 +1,7 @@
 zipurl:
   short-id-size: 8
   url-prefix: https://zipurl.short/
-  redis-ttl: 10
+  redis-ttl: 60
 
 spring:
   application:
@@ -53,10 +53,10 @@ resilience4j:
         slidingWindowSize: 4
         minimumNumberOfCalls: 2
         failureRateThreshold: 50
-        waitDurationInOpenState: 10s
+        waitDurationInOpenState: 30s
   ratelimiter:
     instances:
       createShortUrlLimiter:
         limit-for-period: 5
-        limit-refresh-period: 30s
+        limit-refresh-period: 10s
         timeout-duration: 0
