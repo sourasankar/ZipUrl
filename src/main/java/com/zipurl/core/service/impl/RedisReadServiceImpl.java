@@ -18,28 +18,28 @@ public class RedisReadServiceImpl implements RedisReadService {
 
     @CircuitBreaker(name = "redisError", fallbackMethod = "redisFallBackToDB")
     @Override
-    public String getCachedUrl(String key) {
+    public String getCachedUrl(String shortId) {
         System.out.println("Inside getRedisCachedUrl");
-        String url = redisTemplate.opsForValue().get(key);
-        if (url != null) {
-            return url;
+        String longUrl = redisTemplate.opsForValue().get(shortId);
+        if (longUrl != null) {
+            return longUrl;
         }
         System.out.println("Url not found Redis");
-        return getFromDBAndCacheToRedis(key);
+        return getFromDBAndCacheToRedis(shortId);
     }
 
-    public String redisFallBackToDB(String key, Throwable e) {
+    public String redisFallBackToDB(String shortId, Throwable e) {
         System.out.println("Exception : " + e);
-        return getFromDBAndCacheToRedis(key);
+        return getFromDBAndCacheToRedis(shortId);
     }
 
-    private String getFromDBAndCacheToRedis(String key) {
+    private String getFromDBAndCacheToRedis(String shortId) {
         System.out.println("Inside getFromDBAndCacheToRedis");
-        String url = databaseService.getFromDB(key);
-        if (url != null) {
-            Boolean redisFlag = redisWriteService.saveUrlWithExpiry(key, url);
+        String longUrl = databaseService.getFromDB(shortId);
+        if (longUrl != null) {
+            Boolean redisFlag = redisWriteService.saveUrlWithExpiry(shortId, longUrl);
             System.out.println("Redis save status : " + redisFlag);
-            return url;
+            return longUrl;
         }
         System.out.println("Url not found DB");
         return null;

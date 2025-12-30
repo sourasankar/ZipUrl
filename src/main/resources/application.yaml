@@ -1,6 +1,7 @@
 zipurl:
   short-id-size: 8
   url-prefix: https://zipurl.short/
+  redis-ttl: 10
 
 spring:
   application:

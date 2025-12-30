@@ -10,4 +10,5 @@ import org.springframework.stereotype.Component;
 public class ZipUrlConfig {
     private Integer shortIdSize;
     private String urlPrefix;
+    private Integer redisTtl;
 }
