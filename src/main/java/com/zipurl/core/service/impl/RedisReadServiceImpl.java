@@ -25,23 +25,16 @@ public class RedisReadServiceImpl implements RedisReadService {
             return longUrl;
         }
         System.out.println("Url not found Redis");
-        return getFromDBAndCacheToRedis(shortId);
+        return getFromDB(shortId);
     }
 
     public String redisFallBackToDB(String shortId, Throwable e) {
         System.out.println("Exception : " + e);
-        return getFromDBAndCacheToRedis(shortId);
+        return getFromDB(shortId);
     }
 
-    private String getFromDBAndCacheToRedis(String shortId) {
-        System.out.println("Inside getFromDBAndCacheToRedis");
-        String longUrl = databaseService.getFromDB(shortId);
-        if (longUrl != null) {
-            Boolean redisFlag = redisWriteService.saveUrlWithExpiry(shortId, longUrl);
-            System.out.println("Redis save status : " + redisFlag);
-            return longUrl;
-        }
-        System.out.println("Url not found DB");
-        return null;
+    private String getFromDB(String shortId) {
+        System.out.println("Inside getFromDB");
+        return databaseService.getFromDBAndCacheToRedis(shortId);
     }
 }

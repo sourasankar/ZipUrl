@@ -2,7 +2,7 @@ package com.zipurl.core.service;
 
 public interface DatabaseService {
 
-    String getFromDB(String key);
+    String getFromDBAndCacheToRedis(String key);
 
-    Boolean saveToDB(String shortId, String longUrl);
+    Boolean saveToDBAndCacheToRedis(String shortId, String longUrl);
 }

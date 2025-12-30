@@ -43,7 +43,7 @@ public class ShortUrlGeneratorServiceImpl implements ShortUrlGeneratorService {
     public String generateShortUrl(String longUrl) {
 
         String shortId = generateShortId();
-        Boolean flag = databaseService.saveToDB(shortId, longUrl);
+        Boolean flag = databaseService.saveToDBAndCacheToRedis(shortId, longUrl);
         if (!flag) return null;
 
         return zipUrlConfig.getUrlPrefix() + shortId;
