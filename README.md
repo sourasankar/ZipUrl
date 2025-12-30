@@ -69,16 +69,6 @@ This project was built to demonstrate:
 
 ---
 
-## 🔮 Possible Enhancements
-
-- Distributed ID generation (Base62 / Snowflake)
-- URL expiration with TTL-based cleanup
-- Analytics (click counts, usage metrics)
-- Dockerized deployment
-- Load testing and benchmarking
-
----
-
 ## 📄 License
 
 This project is for learning and demonstration purposes.
