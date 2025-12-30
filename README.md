@@ -40,7 +40,7 @@ ZipURL is a scalable URL shortening service built to demonstrate system design a
 
 1. Client requests short URL creation
 2. Original URL is stored in MySQL
-3. Short URL mapping is cached in Redis
+3. Short URL mapping is cached in Redis with 10 minutes TTL
 4. On redirect:
    - Check Redis first
    - Fallback to MySQL on cache miss
